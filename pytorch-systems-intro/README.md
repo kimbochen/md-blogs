@@ -55,7 +55,6 @@ e.g. activation functions. They are generally memory-bounded.
 # PyTorch
 
 ## The eager-mode lowering pipeline
-
 Eager mode refers to that PyTorch executes operations line-by-line without a wholistic view of the code.
 It has the benefit of flexibility and easier to debug at the cost of many optimization opportunities.  
 The current pipeline is as follows:
@@ -68,13 +67,15 @@ The current pipeline is as follows:
 1. **Aten IR** is then used to bootstrap an eager backend, i.e. a kernel.
    - A kernel is determined by the 3 traits of its operands: **device**, **layout**, and **dtype**.
 
-## The PyTorch 2.0 compiling pipeline
+![](assets/eager-mode-lowering-pipeline.png)
 
+## The PyTorch 2.0 compiling pipeline
 1. **TorchDynamo** traces **torch API** code and creates optimizable code blocks, while keeping the rest in eager mode.
 1. The code blocks get lowered into **ATen** and may be decomposed into **PrimTorch** IR.
    - **PrimTorch** is a minimal set of operators that a hardware needs to support to cover all operators (In development).
 1. **TorchInductor** lowers **ATen/Prim** IR to kernel-level IR and compiles to hardware specific code.
 
+![](assets/pt2-lowering-pipeline.png)
 
 # References
 
