@@ -1,4 +1,16 @@
-# Introduction to PyTorch and ONNX
+# How PyTorch Works - A Systems Perspective
+
+This is an introduction to how PyTorch works from a systems perspective.  
+This post assumes almost no knowledge of machine learning and is written for non-ML engineers.
+
+
+- [Deep Neural Network Model Development Basics](#Deep-Neural-Network-Model-Development-Basics)
+  - [Serving](#Serving)
+  - [Training](#Training)
+  - [Neural Network Computation](#Neural-Network-Computation)
+- [PyTorch](#PyTorch)
+  - [The eager-mode lowering pipeline](#The-eager-mode-lowering-pipeline)
+  - [The PyTorch 2.0 compiling pipeline](The-PyTorch-2.0-compiling-pipeline)
 
 
 # Deep Neural Network Model Development Basics
@@ -40,17 +52,6 @@ Point-wise operations refer to operations that perform simple element-wise opera
 e.g. activation functions. They are generally memory-bounded.
 
 
-# Serving - ONNX QNN
-
-ONNX is a cross-platform runtime that supports a wide range of **frameworks, operating systems, and hardware**.
-It has great support for inference but limited support for training.  
-Qualcomm already supports the ONNX _inference_ runtime with its QNN platform, which offers 2 SDKs:
-**Qualcomm Neural Processing SDK** and **Qualcomm AI Engine Direct SDK**.
-Developers use the Qualcomm Neural Processing SDK to convert an ONNX model into a special file type `.dlc`,
-which can then undergo model compression processes (e.g. quantization) and be deployed onto Snapdragon devices.
-The Qualcomm Neural Processing SDK under the hood leverages the Qualcomm AI Engine Direct SDK to communicate with the hardware.  
-
-
 # PyTorch
 
 ## The eager-mode lowering pipeline
@@ -74,13 +75,10 @@ The current pipeline is as follows:
    - **PrimTorch** is a minimal set of operators that a hardware needs to support to cover all operators (In development).
 1. **TorchInductor** lowers **ATen/Prim** IR to kernel-level IR and compiles to hardware specific code.
 
+
 # References
 
 - [PyTorch 2.0 - Overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
 - [PyTorch 2 Manifestor and Architecture Docs](https://dev-discuss.pytorch.org/t/pytorch-2-0-manifesto-and-architecture-docs/896)
 - [TorchInductor](https://dev-discuss.pytorch.org/t/torchinductor-a-pytorch-native-compiler-with-define-by-run-ir-and-symbolic-shapes/747)
 - [PyTorch Internals: ezyang’s blog](blog.ezyang.com/2019/05/pytorch-internals/)
-- [ONNX Runtime](https://onnxruntime.ai/about.html)
-- [Qualcomm Neural Processing SDK](https://developer.qualcomm.com/software/qualcomm-neural-processing-sdk/getting-started)
-- [Snapdragon Neural Processing Engine SDK Documentation](https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/overview.html)
-- [Qualcomm AI Engine Direct SDK](https://developer.qualcomm.com/software/qualcomm-ai-engine-direct-sdk)
