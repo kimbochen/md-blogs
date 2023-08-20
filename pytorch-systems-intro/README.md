@@ -10,7 +10,7 @@ This post assumes almost no knowledge of machine learning and is written for non
   - [Neural Network Computation](#Neural-Network-Computation)
 - [PyTorch](#PyTorch)
   - [The eager-mode lowering pipeline](#The-eager-mode-lowering-pipeline)
-  - [The PyTorch 2.0 compiling pipeline](#The-PyTorch-2.0-compiling-pipeline)
+  - [The PyTorch 2.0 compiling pipeline](#The-PyTorch-20-compiling-pipeline)
 
 
 # Deep Neural Network Model Development Basics
