@@ -8,7 +8,7 @@ My impression is that the engineering feats behind such extreme scaling are amaz
 
 - [Model Architecture](#model-architecture)
   - [Parallel Layers](#parallel-layers)
-  - [Multi-query Attention](#multiquery-attention)
+  - [Multi-query Attention](#multi-query-attention)
 - [Training Infrastructure](#training-infrastructure)
 - [Bitwise Determinism](#bitwise-determinism)
 - [Training Instability](#training-instability)
