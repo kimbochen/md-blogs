@@ -97,7 +97,7 @@ The author's experiments supports this by showing that a CUDA-only implementatio
 because XLA launches 2 extra kernels.
 
 
-> Hardware architecture
+> Hardware architecture  
 > This is not mentioned in the paper, but the efficacy of operator fusion is also dependent on the hardware architecture.
 > Fusion only makes sense when the operands exceed the memory capacity.
 > In other words, there is no point fusing kernels if everything, including intermediate values, can be accessed from high-speed memory.

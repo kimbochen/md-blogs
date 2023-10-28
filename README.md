@@ -11,6 +11,8 @@ Hopefully this removes the need to mess with the website generators and lets me 
 - [PaLM - Pathways Language Model](https://github.com/kimbochen/md-blogs/tree/main/palm)
 - [TPU v4 and TPU v5e](https://github.com/kimbochen/md-blogs/tree/main/tpuv4_v5e)
 - [Mobile V-MoEs: Scaling Down Vision Transformers via Sparse Mixture-of-Experts](https://github.com/kimbochen/md-blogs/tree/main/mobile-v-moes)
+- [The Hardware Lottery](https://github.com/kimbochen/md-blogs/tree/main/the-hardware-lottery)
+- [Graph Compilers](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers)
 
 
 ## Format
