@@ -107,3 +107,8 @@ because XLA launches 2 extra kernels.
 ## Conclusion
 As deep learning moves out of research setting into production enviornments, we need every possible optimization to run models efficiently.
 There seems to be still a lot of optimization opportunities and definitely a long way from a unified compiler stack.
+
+## Further Readings
+- [Deep Learning Compiler Survey](https://arxiv.org/abs/2002.03794)
+- [Intel OneDNN Graph Compiler](https://arxiv.org/abs/2301.01333)
+- Groq, an ML hardware accelerator startup, has a compiler that does not generate or use kernels, which is quite unique (source to be added).
