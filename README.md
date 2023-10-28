@@ -1,8 +1,7 @@
 # Markdown Blog
 
-This is an experiment that uses the GitHub repo as a blog.  
-A GitHub repo Readme is good enough as long as it supports basic formatting, $LaTeX$, and render images.  
-Hopefully this removes the need to mess with the website generators and lets me focus on writing.
+Hello, I am [Kimbo Chen](https://twitter.com/kimbochen).  
+This is a blog where I write about research papers and blog posts I read.
 
 ## Posts
 
@@ -13,16 +12,3 @@ Hopefully this removes the need to mess with the website generators and lets me 
 - [Mobile V-MoEs: Scaling Down Vision Transformers via Sparse Mixture-of-Experts](https://github.com/kimbochen/md-blogs/tree/main/mobile-v-moes)
 - [The Hardware Lottery](https://github.com/kimbochen/md-blogs/tree/main/the-hardware-lottery)
 - [Graph Compilers](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers)
-
-
-## Format
-
-- Each folder contains a blog post.
-- Folder name is a shorter name of the blog post title.
-- The Markdown file **must be named as README.md** to trigger rendering.
-
-
-## Engineering work
-
-- [ ] Script for automatically generating table of contents
-- [ ] Script for updating post list
