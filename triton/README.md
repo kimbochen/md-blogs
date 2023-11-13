@@ -60,6 +60,33 @@ The paper mentions diagonal tensor properties can also be exploited in the futur
 
 ## Triton GPU IR
 
+Triton GPU IR is where the machine-dependent optimization passes happen.
+Machine-dependent optimization passes are mostly about data layout,
+including hierarchical tiling, memory coalescing, and shared memory allocation.
+
+### Hierarchical Tiling and Memory Coalescing
+
+![](assets/hierarchical_tiling.png)
+
+> Source: [Original Paper](https://www.eecs.harvard.edu/~htk/publication/2019-mapl-tillet-kung-cox.pdf)
+
+This optimization specifies data layout in every memory hierarchy to fit the hardware's resource as tightly as possible.
+The author claims that Triton is able to enumerate configurations and optimize without the need of polyhedral machinery.
+I wonder how this is achieved and would love to investigate more.
+
+Memory coalescing is one of the optimization constraints of hierarchical tiling.
+Because of the GPU hardware architecture, adjacent threads accessing nearby memory locations would reduce the memory latency.
+This technique is called memory coalescing (_coalesce: combine elements in a mass or whole_).
+The Triton compiler would order the threads within a tile so that they perform coalesced memory accesses whenever possible.
+
+### Shared Memory Allocation and Synchronization
+
+Cooperating threads can access a common unit of fast shared memory.
+Shared memory can reduce memory access time when operations would repeatedly access the same piece of data.
+Triton first analyzes how long each variable of interest are used, and 
+applies [a storage allocation algorithm](https://dl.acm.org/doi/pdf/10.5555/314500.315082)
+to determine when and where to store those variables.
+
 
 # PyTorch 2 Integration
 
