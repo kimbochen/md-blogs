@@ -88,7 +88,7 @@ The authors found XLA's rule-based optimizations are generally more conservative
 In addition, the author calls for auto-tuning loop unrolling, since the iterative nature of machine learning training brings plenty performance gains.
 Finally, XLA does not seem to consider backpropagation-specific optimizations such as activation checkpointing, aka rematerialization,
 when performing operator fusion. Activation checkpointing is implemented in AOT Autograd of PyTorch 2
-([Explanation by Horrace He](https://dev-discuss.pytorch.org/t/min-cut-optimal-recomputation-i-e-activation-checkpointing-with-aotautograd/467).
+([Explanation by Horrace He](https://dev-discuss.pytorch.org/t/min-cut-optimal-recomputation-i-e-activation-checkpointing-with-aotautograd/467)).
 
 ### Custom CUDA kernel hinders optimization
 Because XLA uses third-party library, e.g. cuDNN and cuBLAS, for specific ML operators without knowledge of the implementations,

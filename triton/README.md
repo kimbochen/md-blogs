@@ -97,7 +97,7 @@ Triton is integrated with TorchInductor and is the default codegen for GPUs.
 The PyTorch compiler stack leverages Triton to generate generic kernels with function inlining and operator fusion.
 Using Triton with TorchInductor offers decent speedups for model training and inference.
 Function inlining and operator fusion are the optimizations that provide the most speedup,
-which is in line with what I learned about ML compilers ([My ML compiler post](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers).  
+which is in line with what I learned about ML compilers ([My ML compiler post](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers)).  
 
 | | Inference | Training |
 | -: | :- | :- |
