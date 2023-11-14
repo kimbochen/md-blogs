@@ -12,3 +12,4 @@ This is a blog where I write about research papers and blog posts I read.
 - [Mobile V-MoEs: Scaling Down Vision Transformers via Sparse Mixture-of-Experts](https://github.com/kimbochen/md-blogs/tree/main/mobile-v-moes)
 - [The Hardware Lottery](https://github.com/kimbochen/md-blogs/tree/main/the-hardware-lottery)
 - [Graph Compilers](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers)
+- [Triton Compiler](https://github.com/kimbochen/md-blogs/tree/main/triton)
