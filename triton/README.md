@@ -29,7 +29,7 @@ allowing programmers to write vectorized code at the block-level abstraction and
 | Memory Coalescing | Manual | Automatic | 
 | Shared Memory Management | Manual | Automatic | 
 | Block Scheduling | Manual | Automatic | 
-| Grid Scheduling | Manual | Automatic | 
+| Grid Scheduling | Manual | Manual | 
 
 Source: [OpenAI Triton Blog post](https://openai.com/research/triton)
 
@@ -85,13 +85,44 @@ Cooperating threads can access a common unit of fast shared memory.
 Shared memory can reduce memory access time when operations would repeatedly access the same piece of data.
 Triton first analyzes how long each variable of interest are used, and 
 applies [a storage allocation algorithm](https://dl.acm.org/doi/pdf/10.5555/314500.315082)
-to determine when and where to store those variables.
+to determine when and where to store those variables.  
+Cooperating threads need an explicit synchronize barrier to avoid data race issues.
+Triton automatically inserts barriers by detecting data hazards (read-after-writes and write-after-reads) with data-flow analysis.
 
 
-# PyTorch 2 Integration
+# PyTorch 2.0 Integration
+
+PyTorch 2.0 introduced a compiler stack, from TorchDynamo (Python to PyTorch's IR) to TorchInductor (PyTorch's IR to codegen).
+Triton is integrated with TorchInductor and is the default codegen for GPUs.
+The PyTorch compiler stack leverages Triton to generate generic kernels with function inlining and operator fusion.
+Using Triton with TorchInductor offers decent speedups for model training and inference.
+Function inlining and operator fusion are the optimizations that provide the most speedup,
+which is in line with what I learned about ML compilers ([My ML compiler post](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers).  
+
+| | Inference | Training |
+| -: | :- | :- |
+| All TorchInductor Optimizations | 1.91 $\times$ | 1.45 $\times$ |
+| No fusion | 1.68 $\times$ (-0.23) | 1.27 $\times$ (-0.18) |
+| No inlining | 1.58 $\times$ (-0.33) | 1.31 $\times$ (-0.14) |
+| No fusion and no inlining | 0.8 $\times$ (-1.11) | 0.59 $\times$ (-0.86) |
+
+> Geomean speedup over PyTorch eager on 45 HuggingFace FP16 models.
+> Source: [Triton Conference: PyTorch 2.0 and TorchInductor](https://www.youtube.com/watch?v=p13HpZv2S3Q)
+
+However, highly-tuned libraries like cuBLAS still outperforms Triton by a decent margin for small Transformer models.
+The author explains that cuBLAS is able to apply [3D matmul algorithms](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5389455)
+to provide more parallelism.  
+For more information on the PyTorch compiler stack, see this [terrific slide deck by Keren Zhou](https://www.jokeren.tech/slides/Triton_bsc.pdf)
+or [my blog post](https://github.com/kimbochen/md-blogs/tree/main/pytorch-systems-intro#pytorch).
 
 
 # Conclusion
+
+Triton is a domain-specific language for GPU programming that automates memory and thread block management
+while offering highly-tuned library performance.
+[Here](https://www.jokeren.tech/slides/triton_intel.pdf) is a great introduction to Triton by Keren Zhou.  
+Finally, I wonder if Triton could support scheduling across multiple GPUs in the future,
+given the trend of training and deploying large language models.
 
 
 # References
@@ -99,3 +130,7 @@ to determine when and where to store those variables.
 - [OpenAI Triton Blog post](https://openai.com/research/triton)
 - [Original Paper - Triton: An Intermediate Language and Compiler for Tiled Neural Network Computations](https://www.eecs.harvard.edu/~htk/publication/2019-mapl-tillet-kung-cox.pdf)
 - [PyTorch Lightning Talk: Triton Compiler - Thomas Raoux, OpenAI](https://www.youtube.com/watch?v=AtbnRIzpwho)
+- [Triton Conference: PyTorch 2.0 and TorchInductor](https://www.youtube.com/watch?v=p13HpZv2S3Q)
+- [Algorithms for Compile-Time Memory Optimizations](https://dl.acm.org/doi/pdf/10.5555/314500.315082)
+- [A three-dimensional approach to parallel matrix multiplication](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5389455)
+- [Towards Agile Development of Efficient Deep Learning Operators - Keren Zhou](https://www.jokeren.tech/slides/triton_intel.pdf)
