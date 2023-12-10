@@ -144,13 +144,14 @@ First, 2 CUDA term translations:
 
 Triton GPU IR attributes are all defining **layouts**, aka layout encodings.  
 A layout is a function that maps a tensor index to the set of CUDA threads that can access the tensor element.  
-Formally speaking, layout $\mathcal{L}: \mathbb{Z}^d \rightarrow \{ t | t \in \mathbb{Z}\}$
 
 The base class for a layout is `DistributedLayoutEncoding`, which is defined with a tensor $T$.  
 Let the data tensor be $A$ and its index be $i$, $rank(A) = rank(T) = D, i \in \mathbb{Z}^D$
 
-Layout $\mathcal{L}_{T}(i) = \{ \; T[idx(k)]  \; \forall k\; \}$,
-$idx(k) = [\; (i_d + k \times Ashape_d) \; \% \; Tshape_d \;\;|\;\; \forall d \in [0, D - 1] \; ]$
+Layout `L_T[i] = { T[idx(k)] }` $\forall k$,
+```python
+idx(k) = [ (i_d + k * dim(A, d)) % dim(T, d) for d in range(D)]
+```
 
 For example,
 ```python
@@ -222,7 +223,7 @@ CTA [0,1]                                              CTA [1,1]
 [ 28 28 29 29 30 30 31 31 ; 60 60 ... 63 63 ]  [ 28 28 29 29 30 30 31 31 ; 60 60 ... 63 63 ]
 ```
 (Example taken from the source code.
-[[Link]](https://github.com/openai/triton/blob/addd94e4a8d4dc0beefd5df6d97d57d18065436a/include/triton/Dialect/TritonGPU/IR/TritonGPUAttrDefs.td#L444))
+[Link](https://github.com/openai/triton/blob/addd94e4a8d4dc0beefd5df6d97d57d18065436a/include/triton/Dialect/TritonGPU/IR/TritonGPUAttrDefs.td#L444))
 
 
 ### Other Layout Encodings
