@@ -1,19 +1,27 @@
-# Triton GPU IR Deep Dive
+# Triton GPU IR Analysis
+
 
 ## Table of Contents
 
 - [Triton Compiler Code Structure](#triton-compiler-code-structure)
   - [Triton GPU IR](#triton-gpu-ir)
-  - [Other Stuff](#other-stuff)
+  - [Other Components](#other-components)
 - [Triton GPU IR Attribute Definitions](#triton-gpu-ir-attribute-definitions)
   - [Distributed Layout Encoding](#distributed-layout-encoding)
   - [Blocked Layout Encoding](#blocked-layout-encoding)
   - [Other Layout Encodings](#other-layout-encodings)
 - [Axis Information](#axis-information)
+  - [Contiguity](#contiguity)
+  - [Divisibility](#divisibility)
+  - [Constancy](#constancy)
+  - [Constraints](#constraints)
 - [Optimize Thread Locality Pass](#optimize-thread-locality-pass)
+  - [Get Thread Locality Optimized Encoding](#get-thread-locality-optimized-encoding)
+  - [Get Thread Locality Optimized Shape](#get-thread-locality-optimized-shape)
 - [Coalesce Pass](#coalesce-pass)
+  - [AxisInfo](#axisinfo)
+  - [Number of Threads Per Element](#number-of-threads-per-element)
 - [Lowering Python Front-end code to GPU IR](#lowering-python-front-end-code-to-gpu-ir)
-- [Grouped Matrix Multiplication in Triton Language](#grouped-matrix-multiplication-in-triton-language)
 
 
 ## Triton Compiler Code Structure
@@ -79,10 +87,9 @@ They can be roughly grouped into 3 types: CUDA-related, tensor-core-related, and
   - `DecomposeConversions`
   - `RemoveLayoutConversions`
 
-I will be detailing the `Coalesce` and the `OptimizeThreadLocality` pass. More on that later.
+In future sections, I will be detailing the [`Coalesce`](#coalesce-pass) and the [`OptimizeThreadLocality`](#optimize-thread-locality-pass) pass.
 
-
-### Other Stuff
+### Other Components
 
 These are other stuff in the compiler that are worth mentioning:
 
@@ -127,7 +134,6 @@ These are other stuff in the compiler that are worth mentioning:
 - `Conversion`: How dialects are lowered from one to another.
 - `Dialect/Triton`: The Triton IR, the IR which Triton GPU IR lowers from.
 
-\newpage
 
 ## Triton GPU IR Attribute Definitions
 
@@ -144,11 +150,12 @@ First, 2 CUDA term translations:
 
 Triton GPU IR attributes are all defining **layouts**, aka layout encodings.  
 A layout is a function that maps a tensor index to the set of CUDA threads that can access the tensor element.  
+Formally speaking, layout $\mathcal{L}: \mathbb{Z}^d \rightarrow \{ t | t \in \mathbb{Z}\}$
 
 The base class for a layout is `DistributedLayoutEncoding`, which is defined with a tensor $T$.  
 Let the data tensor be $A$ and its index be $i$, $rank(A) = rank(T) = D, i \in \mathbb{Z}^D$
 
-Layout `L_T[i] = { T[idx(k)] }` $\forall k$,
+Layout `L_T[i] = { T[idx(k)] }` $\forall k$, where
 ```python
 idx(k) = [ (i_d + k * dim(A, d)) % dim(T, d) for d in range(D)]
 ```
@@ -191,8 +198,6 @@ layout = [
 ]
 ```
 
-\newpage
-
 Here's an example of a blocked layout encoding of a $32 \times 32$ tensor:
 
 | Hierarchy | Shape | Order |
@@ -222,8 +227,8 @@ CTA [0,1]                                              CTA [1,1]
 [ 28 28 29 29 30 30 31 31 ; 60 60 ... 63 63 ]  [ 28 28 29 29 30 30 31 31 ; 60 60 ... 63 63 ]
 [ 28 28 29 29 30 30 31 31 ; 60 60 ... 63 63 ]  [ 28 28 29 29 30 30 31 31 ; 60 60 ... 63 63 ]
 ```
-(Example taken from the source code.
-[Link](https://github.com/openai/triton/blob/addd94e4a8d4dc0beefd5df6d97d57d18065436a/include/triton/Dialect/TritonGPU/IR/TritonGPUAttrDefs.td#L444))
+(Example taken from
+[the source code](https://github.com/openai/triton/blob/addd94e4a8d4dc0beefd5df6d97d57d18065436a/include/triton/Dialect/TritonGPU/IR/TritonGPUAttrDefs.td#L444).)
 
 
 ### Other Layout Encodings
@@ -246,12 +251,126 @@ Finally, slice layout encoding is a layout encoding that will be used in the
 ## Axis Information
 
 Axis information is the class `AxisInfo` in `include/triton/Analysis/AxisInfo.h`.
+`AxisInfo` quantifies the properties of a layout using _lattice theory_.
+Specifically, an axis information includes **contiguity**, **divisibility**, and **constancy**.
+
+### Contiguity
+
+A contiguity value represents the length of the shortest contiguous sequence in an array.
+For example,
+```python
+array = [12, 13, 14, 15, 18, 19]
+Contiguous sequences = { [12, 13, 14, 15], [18, 19] }
+Contiguity value = 2
+```
+
+### Divisibility
+
+A divsibility value represents the greatest common divisor of
+all the first elements of the contiguous sequences in an array.
+For example,
+```python
+array = [10, 11, 12, 13, 18, 19, 20, 21]
+Contiguous sequences = { [10, 11, 12, 13], [18, 19, 20, 21] }
+First elements = { 10, 18 }
+Divisibility = 2
+```
+
+### Constancy
+
+A constancy value represents the length of the shortest constant sequence in an array.
+For example,
+```python
+array = [8, 8, 8, 8, 12, 12]
+Constant sequences = { [8, 8, 8, 8], [12, 12] }
+Constancy = 2
+```
+
+### Constraints
+
+- All 3 properties are defined for every dimension in an array. That is,
+  ```python
+  array = [
+      [12, 13, 14, 15, 18, 19],
+      [22, 23, 24, 25, 28, 29]
+  ]
+  Contiguity = [1, 2]
+  ```
+- The values of all 3 properties are constrained to powers of 2.
 
 
 ## Optimize Thread Locality Pass
 
+This pass optimizes the data layout for reduction operations by lowering the synchronization cost between warps in an SM.
+Specifically, we recalculate the blocked layout encoding and create a new view of the data tensor.
+
+### Get Thread Locality Optimized Encoding
+
+Implemented in `getThreadLocalityOptimizedEncoding`, the new layout encoding is as follows:
+
+- We first append an additional dimension to every hierarchical level to denote the reduction dimension, making every level 3-dimensional.
+- For `sizePerThread`, we transpose the reduction dimension with the last one.
+- For axis iteration order of threads `order`, we prepend the reduction dimension, making it the fastest changing axis.
+
+### Get Thread Locality Optimized Shape
+
+We also create a _view_ (abstract shape) of the data tensor shape with function `getThreadLocalityOptimizedShape`
+to optimize for thread locality.
+To leverage thread locality, we split the reduction dimension size into 2: **the number of elements per thread** $E$ and **the number of threads** $N$.
+The dimension $E$ is appended to the tensor shape.
+For example,
+```python
+tensor.shape = [4, 8]
+tensor.elemsPerThread = [4, 4]
+Reduce dimension = 1
+
+Number of threads = 8 / 4 = 2
+tensor.view = [4, 2, 4]
+```
+Interestingly, the code uses integer division, so the number of elements would change if the reduction dimension size is not divisible by $E$.
+I suspect that the tensor shape and $E$ both have limitations in what value they can take on, so it is always divisible.
+
+
 ## Coalesce Pass
+
+The coalesce pass transforms the layout of operands into coalesced memory layout.
+Specifically, the pass recomputes `sizePerThread` to maximize memory access efficiency.
+The core algorithm is implemented in function `setCoalescedEncoding`.
+
+### AxisInfo
+
+Implemented as a lambda function `queryAxisInfo`, the first step is to get the axis information of the data layout.
+We first construct the 3 properties, each of them being a vector the size of the data tensor rank intialized with 1.
+We then calculate the contiguity and divisibility of the `i`-th dimension, where `i` is the fastest changing axis (`order[0]`).
+
+- Contiguity: The `i`-th dimension contiguity is set to `threadsPerCTA.shape[i]`,
+- Divisibility: The `i`-th dimension divisibility is set to `128 / B`, where `B` is the number of bytes per element.
+
+### Number of Threads Per Element
+
+We then recalculate the number of threads per element in the `i`-th dimension with the axis information (`getNumElementPerThread`).
+The optimal number of threads per element is the smallest among the following:
+
+- Maximum contiguous thread ID assignments: This is the contiguity value.
+- Maximum multiple of elements: This is the divisibility value divided by the number of bytes per element.
+- Maximum number of elements in a vectorized store op: 128 bits divided by the element bitwidth.
+
+We then recalculate the rest of the layout encoding with this new value.
+
+
+As of writing, **I still struggle understanding what divisibiliy represents.**  
+The divisibility in `queryAxisInfo` is actually `16 * 8 / B`, but the comments in the code says the value is set to 16.  
+What is more confusing is that `getNumElementPerThread` uses divisibility as
+**number of bytes in a multiple**, whereas in `queryAxisInfo` `16 * 8 / B` seems to imply the unit to be **number of elements**.  
+Finally, I could not see the connection between those 2 values and the original definition.
+
 
 ## Lowering Python Front-end code to GPU IR
 
-## Grouped Matrix Multiplication in Triton Language
+I sifted through the Triton's Python front-end code and hacked up a lowering pipeline based on 2 files:
+
+- `python/triton/compiler/compiler.py`
+- `python/triton/tools/compile.py`
+
+I implemented it in a jupyter notebook `triton-dump-ir.ipynb` and generated `compile_test_ttgir.ll`.
+The IR code is fully commented. See the code for more explanation.
