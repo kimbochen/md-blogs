@@ -346,10 +346,10 @@ We then calculate the contiguity and divisibility of the `i`-th dimension, where
 - Contiguity: The `i`-th dimension contiguity is set to `threadsPerCTA.shape[i]`,
 - Divisibility: The `i`-th dimension divisibility is set to `128 / B`, where `B` is the number of bytes per element.
 
-### Number of Threads Per Element
+## Number of Elements Per Thread
 
-We then recalculate the number of threads per element in the `i`-th dimension with the axis information (`getNumElementPerThread`).
-The optimal number of threads per element is the smallest among the following:
+We then recalculate the number elements of per thread in the `i`-th dimension with the axis information (`getNumElementPerThread`).
+The optimal number of elements per thread is the smallest among the following:
 
 - Maximum contiguous thread ID assignments: This is the contiguity value.
 - Maximum multiple of elements: This is the divisibility value divided by the number of bytes per element.

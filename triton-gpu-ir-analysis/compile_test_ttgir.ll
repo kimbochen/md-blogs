@@ -8,8 +8,10 @@ module attributes {"triton_gpu.num-warps" = 1 : i32, "triton_gpu.threads-per-war
 
     %1 = arith.muli %0, %c1024_i32 : i32    ; block_start = pid * BLOCK_SIZE
 
-    %2 = tt.make_range {end = 1024 : i32, start = 0 : i32} :  ; tl.arange(0, BLOCK_SIZE)
-    tensor<1024xi32, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>  ; Tensor layout for tl.arange(0, BLOCK_SIZE)
+    ; tl.arange(0, BLOCK_SIZE)
+    ; The second line is the tensor layout for tl.arange(0, BLOCK_SIZE)
+    %2 = tt.make_range {end = 1024 : i32, start = 0 : i32} :
+    tensor<1024xi32, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
 
     ; Broadcasts `block_start` shape to match tl.arange(0, BLOCK_SIZE)
     ; splat is an MLIR tensor dialect operation that broadcasts tensor shapes
@@ -32,11 +34,11 @@ module attributes {"triton_gpu.num-warps" = 1 : i32, "triton_gpu.threads-per-war
        tensor<1024xi32, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
       ) -> tensor<1024xi1, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
 
-    ; Broadcasts `x_ptr` to a tensor of pointers with shape like `offsets
+    ; Broadcasts `x_ptr` to a tensor of pointers with shape like `offsets`
     %7 = tt.splat %arg0 : (!tt.ptr<f32>) ->
       tensor<1024x!tt.ptr<f32>, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
 
-    ; Compute x_ptr + offsets
+    ; Compute `x_ptr + offsets`
     %8 = tt.addptr %7, %4 :
       tensor<1024x!tt.ptr<f32>, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>,
       tensor<1024xi32, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
@@ -45,11 +47,11 @@ module attributes {"triton_gpu.num-warps" = 1 : i32, "triton_gpu.threads-per-war
     %9 = tt.load %8, %6 {cache = 1 : i32, evict = 1 : i32, isVolatile = false} :
       tensor<1024xf32, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
 
-    ; Broadcasts `y_ptr` to a tensor of pointers with shape like `offsets
+    ; Broadcasts `y_ptr` to a tensor of pointers with shape like `offsets`
     %10 = tt.splat %arg1 : (!tt.ptr<f32>) ->
       tensor<1024x!tt.ptr<f32>, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
 
-    ; Compute y_ptr + offsets
+    ; Compute `y_ptr + offsets`
     %11 = tt.addptr %10, %4 :
       tensor<1024x!tt.ptr<f32>, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>,
       tensor<1024xi32, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
@@ -61,11 +63,11 @@ module attributes {"triton_gpu.num-warps" = 1 : i32, "triton_gpu.threads-per-war
     ; output = x + y
     %13 = arith.addf %9, %12 : tensor<1024xf32, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
 
-    ; Broadcasts `output_ptr` to a tensor of pointers with shape like `offsets
+    ; Broadcasts `output_ptr` to a tensor of pointers with shape like `offsets`
     %14 = tt.splat %arg2 : (!tt.ptr<f32>) ->
       tensor<1024x!tt.ptr<f32>, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
 
-    ; Compute output_ptr + offsets
+    ; Compute `output_ptr + offsets`
     %15 = tt.addptr %14, %4 :
       tensor<1024x!tt.ptr<f32>, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>,
       tensor<1024xi32, #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [1], order = [0]}>>
