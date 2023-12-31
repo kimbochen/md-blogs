@@ -9,6 +9,7 @@ def process_line(line):
     link = '-'.join(words).lower()
     link = link.replace('.', '')  # Remove '.' from the link
     link = link.replace(':', '')  # Remove ':' from the link
+    link = link.replace('/', '')  # Remove '/' from the link
 
     toc_line = f'{indents}- [{title}](#{link})'
 
