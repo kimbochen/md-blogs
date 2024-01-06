@@ -1,6 +1,6 @@
 # Distributed Systems for Machine Learning
 
-This is a live flow of my process of learning about distributed systems for machine learning.
+This is my reading log of distributed systems for machine learning.
 
 
 ## Table of Contents

@@ -13,3 +13,6 @@ This is a blog where I write about research papers and blog posts I read.
 - [The Hardware Lottery](https://github.com/kimbochen/md-blogs/tree/main/the-hardware-lottery)
 - [Graph Compilers](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers)
 - [Triton Compiler](https://github.com/kimbochen/md-blogs/tree/main/triton)
+- [Triton GPU IR Analysis](https://github.com/kimbochen/md-blogs/tree/main/triton-gpu-ir-analysis)
+- Distributed Systems for ML
+  - [Reading Log](https://github.com/kimbochen/md-blogs/tree/main/distributed-systems-for-ml/reading-log.md)
