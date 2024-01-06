@@ -22,6 +22,8 @@ This is a live flow of my process of learning about distributed systems for mach
 - [Tensor Parallelism with `jax.pjit`](#tensor-parallelism-with-jaxpjit)
 - [How to scale AI training to up to tens of thousands of Cloud TPU chips with Multislice](#how-to-scale-ai-training-to-up-to-tens-of-thousands-of-cloud-tpu-chips-with-multislice)
 - [Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Learning](#project-fiddle-fast-and-efficient-infrastructure-for-distributed-deep-learning)
+- [The Adventure of the Errant Hardware](#the-adventure-of-the-errant-hardware)
+- [LLM Training Puzzles](#llm-training-puzzles)
 
 
 ## My Impressions before Diving In
@@ -286,3 +288,24 @@ Blog: [Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Le
 - There is a big publication list
 
 Further reading: [Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Learning](https://www.microsoft.com/en-us/research/project/fiddle/publications/)
+
+
+## The Adventure of the Errant Hardware
+
+Blog post: [The Adventure of the Errant Hardware](https://www.adept.ai/blog/sherlock-sdc)
+
+- So many Sherlock Holmes reference haha
+- Hardware is not always perfect and neural networks are fault-tolerant, making it extremely difficult to debug
+- Floating point arithmetic does not associate: (a + b) + c does not necessarily equal a + (b + c)
+- ECC memory does not protect collective communications
+- Excellent illustration of the ring allreduce algorithm
+- If an error occurs during allgather, the exact same error will be propagated across all nodes
+- Main takeaway: Check on your clusters regularly for silent data corruptions
+
+
+## LLM Training Puzzles
+
+GitHub repo: [LLM Training Puzzles](https://github.com/srush/LLM-Training-Puzzles)
+
+- An interesting puzzle by Sasha Rush that teaches you distributed training algorithms
+- [My solution](https://colab.research.google.com/drive/1lRMv6gAfQKemEbVc5rG0Fe5xLT4z54Af)
