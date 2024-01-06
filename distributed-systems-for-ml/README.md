@@ -4,7 +4,6 @@ This is a live flow of my process of learning about distributed systems for mach
 
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
 - [My Impressions before Diving In](#my-impressions-before-diving-in)
 - [ZeRO and DeepSpeed](#zero-and-deepspeed)
 - [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](#zero-memory-optimizations-toward-training-trillion-parameter-models)
@@ -20,7 +19,9 @@ This is a live flow of my process of learning about distributed systems for mach
 - [High-Performance Llama 2 Training and Inference with PyTorch/XLA on Cloud TPUs](#high-performance-llama-2-training-and-inference-with-pytorchxla-on-cloud-tpus)
 - [Lightning Talk: Large-Scale Distributed Training with Dynamo and PyTorch/XLA SPMD](#lightning-talk-large-scale-distributed-training-with-dynamo-and-pytorchxla-spmd)
 - [Pathways: Asynchronous Distributed Dataflow for ML](#pathways-asynchronous-distributed-dataflow-for-ml)
+- [Tensor Parallelism with `jax.pjit`](#tensor-parallelism-with-jaxpjit)
 - [How to scale AI training to up to tens of thousands of Cloud TPU chips with Multislice](#how-to-scale-ai-training-to-up-to-tens-of-thousands-of-cloud-tpu-chips-with-multislice)
+- [Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Learning](#project-fiddle-fast-and-efficient-infrastructure-for-distributed-deep-learning)
 
 
 ## My Impressions before Diving In
@@ -189,6 +190,8 @@ Paper: [GSPMD: General and Scalable Parallelization for ML Computation Graphs](h
 - GSPMD seems to have a more general programming model compared to FSDP and ZeRO: It deals with sharding tensors rather than model states
 - GSPMD abstracts away how devices communicate, but lets users decide how to shard model states and data
 
+> Further reading: [GSPMD: General and Scalable Parallelization for ML Computation Graphs](https://arxiv.org/abs/2105.04663) compiler sections
+
 
 ## PyTorch/XLA SPMD: Scale Up Model Training and Serving with Automatic Parallelization
 
@@ -213,21 +216,73 @@ Blog post: [High-Performance Llama 2 Training and Inference with PyTorch/XLA on 
     it will only shard for pipeline parallelism
 - Oh my goodness optimizer states and gradients are sharded automatically!?
 - MultiSlice seems like a relevant technology
-- [Inference optimizations](https://pytorch.org/blog/high-performance-llama-2/#inference-optimizations) also look really interesting
+- Inference optimizations also look really interesting
   but is less relevant. Maybe another day.
+
+> Further reading: [Inference optimizations](https://pytorch.org/blog/high-performance-llama-2/#inference-optimizations)
 
 
 ## Lightning Talk: Large-Scale Distributed Training with Dynamo and PyTorch/XLA SPMD
 
 YouTube video: [Lightning Talk: Large-Scale Distributed Training with Dynamo and PyTorch/XLA SPMD - Yeounoh Chung & Jiewen Tan, Google](https://www.youtube.com/watch?v=tWH2MAHzVVc)
 
+- An example of the sharding notation! ([Image source with timestamp](https://www.youtube.com/watch?v=tWH2MAHzVVc&t=635s))
+  ![](assets/2d-sharding-notation.png)
+  - Subscript indicates the device mesh axis the tensor is mapped to.
+- How XLA inserts collective communication operations ([Image source with timestamp](https://www.youtube.com/watch?v=tWH2MAHzVVc&t=721s))
+  ![](assets/2d-sharding-partition.png)
+  - Capital letters are tensor dimensions, lowercase letters are sharded tensor dimensions
+
 
 ## Pathways: Asynchronous Distributed Dataflow for ML
 
 Paper: [Pathways: Asynchronous Distributed Dataflow for ML](https://arxiv.org/abs/2203.12533)
+
+- _The rapid recent progress of ML has been characterized by the co-evolution of ML models, accelerator hardware,
+  and software systems that tie the two together_
+- State-of-the-art LM workloads are **single program multiple data**, but the current systems don't support well sparse models like Mixture-of-Experts
+- Multi-controller architecture: PyTorch and JAX
+  - The same client executable is run directly on all the hosts in the system
+  - Takes exculsive ownership of host resources throught the program execution
+  - All inter-host communication happen through collectives that use interconnects,
+    e.g. [NVLink](https://ieeexplore.ieee.org/document/7924274), [ICI](https://dl.acm.org/doi/pdf/10.1145/3360307)
+- Single-controller architecture: TensorFlow v1
+  - A coordinator runtime partitions the computation graph into subgraphs and delegates them to workers
+- The content is interesting but seems to be too _systems_ for me to understand (at least for now)
+  - Keywords: Single-controller, multi-controller, gang-scheduled dynamic dispatch, parallel asynchronous dispatch,
+    resource manager, client, coordination
+
+
+## Tensor Parallelism with `jax.pjit`
+
+Blog post: [Tensor Parallelism with `jax.pjit`](https://irhum.github.io/blog/pjit/)
+
+- A really nice blog about how tensor parallelsim works
+- Things start getting interesting from [Sharding: A matrix Multiply](https://irhum.github.io/blog/pjit/#sharding-a-matrix-multiply)
+- **Why would we shard the matrix only to gather it in full on every single device? Because we can eliminate duplicate computation when fully sharded.**
+- [GSPMD's sharding spec](https://irhum.github.io/blog/pjit/#gspmds-sharding-spec) section is an excellent walkthrough of an example of
+  how GSPMD shards a tensor computation. The illustration is really helpful.
+
+Further reading: [JAX `pjit` programming model](https://irhum.github.io/blog/pjit/#the-pjit-programming-model)
 
 
 ## How to scale AI training to up to tens of thousands of Cloud TPU chips with Multislice
 
 Blog post: [How to scale AI training to up to tens of thousands of Cloud TPU chips with Multislice](https://cloud.google.com/blog/products/compute/using-cloud-tpu-multislice-to-scale-ai-workloads)
 
+- Modeling system peak FLOPs with global batch size, DCN bandwidth, and chips per ICI domain
+  - DCN: Data center network
+  - ICI: Inter-chip interconnect
+- For a dense LLVM using data parallelism or fully sharded data parallelism, DCN arithmetic intensity $\approx$ minimum batch size per ICI domain (Why?)
+- XLA compiler understands hybrid DCN / ICI network topology and automatically inserts appropriate hierarchical collectives. Allreduce example:
+  ![](https://storage.googleapis.com/gweb-cloudblog-publish/images/12_Tyktblk.max-2000x2000.jpg)
+
+
+## Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Learning
+
+Blog: [Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Learning](https://www.microsoft.com/en-us/research/project/fiddle/overview/)
+
+- The goal is to build efficient systems infrastructure for very fast distributed DNN training
+- There is a big publication list
+
+Further reading: [Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Learning](https://www.microsoft.com/en-us/research/project/fiddle/publications/)
