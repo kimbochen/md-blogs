@@ -24,6 +24,7 @@ This is my reading log of distributed systems for machine learning.
 - [Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Learning](#project-fiddle-fast-and-efficient-infrastructure-for-distributed-deep-learning)
 - [The Adventure of the Errant Hardware](#the-adventure-of-the-errant-hardware)
 - [LLM Training Puzzles](#llm-training-puzzles)
+- [Techniques for training large neural networks](#techniques-for-training-large-neural-networks)
 
 
 ## My Impressions before Diving In
@@ -313,4 +314,4 @@ GitHub repo: [LLM Training Puzzles](https://github.com/srush/LLM-Training-Puzzle
 
 ## Techniques for training large neural networks
 
-Blog post: [Techniques for training large neural networks](Techniques for training large neural networks)
+Blog post: [Techniques for training large neural networks](https://openai.com/research/techniques-for-training-large-neural-networks)
