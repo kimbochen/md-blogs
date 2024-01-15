@@ -309,3 +309,8 @@ GitHub repo: [LLM Training Puzzles](https://github.com/srush/LLM-Training-Puzzle
 
 - An interesting puzzle by Sasha Rush that teaches you distributed training algorithms
 - [My solution](https://colab.research.google.com/drive/1lRMv6gAfQKemEbVc5rG0Fe5xLT4z54Af)
+
+
+## Techniques for training large neural networks
+
+Blog post: [Techniques for training large neural networks](Techniques for training large neural networks)
