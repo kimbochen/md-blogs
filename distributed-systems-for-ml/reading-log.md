@@ -278,7 +278,8 @@ Blog post: [How to scale AI training to up to tens of thousands of Cloud TPU chi
   - ICI: Inter-chip interconnect
 - For a dense LLVM using data parallelism or fully sharded data parallelism, DCN arithmetic intensity $\approx$ minimum batch size per ICI domain (Why?)
 - XLA compiler understands hybrid DCN / ICI network topology and automatically inserts appropriate hierarchical collectives. Allreduce example:
-  ![](https://storage.googleapis.com/gweb-cloudblog-publish/images/12_Tyktblk.max-2000x2000.jpg)
+
+![](https://storage.googleapis.com/gweb-cloudblog-publish/images/12_Tyktblk.max-2000x2000.jpg)
 
 
 ## Project Fiddle: Fast and Efficient Infrastructure for Distributed Deep Learning
