@@ -335,8 +335,11 @@ Blog post: [DeepSpeed: Extreme-scale model training for everyone](https://www.mi
   - Tensor parallel: Sharding a model layer, referred to as "model parallel" in the blog post
   - Pipeline parallel
 - This image shows an example configuration of 3D parallelism: (DP, TP, PP) = (2, 4, 4)
-  ![](assets/3d-parallelism.png)
+
+![](assets/3d-parallelism.png)
+
 - Combining pipeline parallel with data parallel: PP enables data-parallel, same-stage nodes communicate independently,
   effectively increasing the communication bandwidth by $P$, where $P$ is the number of pipeline stages
 - 3D parallelism configuration experiments on GPT-3 Scale Models: Best config achieved 40% model FLOPs utilization
-  ![](assets/3d-parallelism-configs.jpg)
+
+![](assets/3d-parallelism-configs.jpg)
