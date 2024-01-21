@@ -25,6 +25,7 @@ This is my reading log of distributed training for machine learning.
 - [The Adventure of the Errant Hardware](#the-adventure-of-the-errant-hardware)
 - [LLM Training Puzzles](#llm-training-puzzles)
 - [Techniques for training large neural networks](#techniques-for-training-large-neural-networks)
+- [DeepSpeed: Extreme-scale model training for everyone](#deepspeed-extreme-scale-model-training-for-everyone)
 
 
 ## My Impressions before Diving In
@@ -334,8 +335,8 @@ Blog post: [DeepSpeed: Extreme-scale model training for everyone](https://www.mi
   - Tensor parallel: Sharding a model layer, referred to as "model parallel" in the blog post
   - Pipeline parallel
 - This image shows an example configuration of 3D parallelism: (DP, TP, PP) = (2, 4, 4)
-  ![](https://www.microsoft.com/en-us/research/uploads/prod/2020/09/Blog_DeepSpeed3_Figure-1_highres-2048x1230.png)
+  ![](assets/3d-parallelism.png)
 - Combining pipeline parallel with data parallel: PP enables data-parallel, same-stage nodes communicate independently,
   effectively increasing the communication bandwidth by $P$, where $P$ is the number of pipeline stages
 - 3D parallelism configuration experiments on GPT-3 Scale Models: Best config achieved 40% model FLOPs utilization
-  ![](https://www.microsoft.com/en-us/research/uploads/prod/2020/09/DeepSpeed-3_Figure-2-_section-2.jpg)
+  ![](assets/3d-parallelism-configs.jpg)
