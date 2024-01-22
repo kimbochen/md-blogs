@@ -138,7 +138,7 @@ Here's an illustration of configuration (DP, TP, PP) = (2, 4, 4),
 taken from the great [blog post](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 that explains 3D parallelism in-depth.
 
-![](https://www.microsoft.com/en-us/research/uploads/prod/2020/09/Blog_DeepSpeed3_Figure-1_highres-2048x1230.png)
+![](assets/3d-parallelism.png)
 
 > Note on _Model Parallelism_:
 > As far as I understand, _model parallelism_ refers to any technique than parallelizes the model.
