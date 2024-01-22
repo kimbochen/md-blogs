@@ -167,12 +167,14 @@ Roughly speaking, ZeRO assigns each GPU node a unique set of model layers and op
 Here's an example of 4 GPUs performing ZeRO, where $GPU_i$ consumes data batch $Data_i$ and holds model layers and optimizer states $M_i$.
 
 In the forward pass of layer $M_0$, $GPU_0$ broadcasts model layer weights $M_0$ to all the other GPU nodes to perform data parallel computation.
+
 ![](assets/zero-forward-pass.png)
 
 In the backward pass of layer $M_3$, $GPU_3$ similarly broadcasts model layer weights $M_3$ to all the other GPU nodes
 to perform data parallel computation.
 Every GPU node computes local gradients with respect to their data batch,
 and $GPU_3$ reduces all gradients to update $M_3$ layer weights and model states.
+
 ![](assets/zero-backward-pass.png)
 
 The images are taken from the animation in this
