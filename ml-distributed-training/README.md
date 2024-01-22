@@ -2,6 +2,17 @@
 
 In this blog post we introduce popular concepts and techniques used in distributed training for machine learning.
 
+## Table of Contents
+- [Why We Need Distributed Training](#why-we-need-distributed-training)
+- [Collective Operations](#collective-operations)
+- [Data Parallel and Pipeline Parallel](#data-parallel-and-pipeline-parallel)
+- [Tensor Parallel](#tensor-parallel)
+- [3D Parallelism](#3d-parallelism)
+- [ZeRO](#zero)
+- [FSDP](#fsdp)
+- [GSPMD](#gspmd)
+- [Further Readings](#further-readings)
+
 
 ## Why We Need Distributed Training
 
