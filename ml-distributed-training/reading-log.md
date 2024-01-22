@@ -1,4 +1,4 @@
-# Distributed Training for Machine Learning
+# Reading Log - Distributed Training for Machine Learning
 
 This is my reading log of distributed training for machine learning.
 
