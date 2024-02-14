@@ -16,6 +16,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [Mixtral of Experts](https://arxiv.org/abs/2401.04088)
 - [GShard](https://arxiv.org/abs/2006.16668)
 - [Switch Transformers](https://arxiv.org/abs/2101.03961)
+- [MoE-Infinity: : Activation-Aware Expert Offloading for Efficient MoE Serving](https://arxiv.org/abs/2401.14361)
 
 
 ## LLM Inference
@@ -26,6 +27,10 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [Break the Sequential Dependency of LLM Inference Using Lookahead Decoding](https://lmsys.org/blog/2023-11-21-lookahead-decoding/)
 - [Fast and Expressive LLM Inference with RadixAttention and SGLang](https://lmsys.org/blog/2024-01-17-sglang/)
 - [Efficient LLM inference solution on Intel GPU](https://arxiv.org/abs/2401.05391)
+- [MatFormer: Nested Transformer for Elastic Inference](https://arxiv.org/abs/2310.07707)
+- [EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://huggingface.co/papers/2401.15077)
+- [Specialized Language Models with Cheap Inference from Limited Domain Data](https://huggingface.co/papers/2402.01093)
+- [Accelerating Self-Attentions for LLM Serving with FlashInfer](https://flashinfer.ai/2024/02/02/introduce-flashinfer.html)
 
 
 ## Models
@@ -45,6 +50,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [LLM Training and Inference with Intel Gaudi 2 AI Accelerators](https://www.databricks.com/blog/llm-training-and-inference-intel-gaudi2-ai-accelerators)
 - [How Hugging Face improved Text Generation performance with XLA](https://blog.tensorflow.org/2022/11/how-hugging-face-improved-text-generation-performance-with-xla.html)
 - [Gemini: Mapping and Architecture Co-exploration for Large-scale DNN Chiplet Accelerators](https://arxiv.org/abs/2312.16436)
+- [The Case for Co-Designing Model Architectures with Hardware](https://arxiv.org/abs/2401.14489)
 
 
 ## Hardware Accelerators
@@ -77,6 +83,12 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [REPLUG: Retrieval-Augmented Black-Box Language Models](https://arxiv.org/abs/2301.12652)
 - [Augmentation-Adapted Retriever Improves Generalization of Language Models as Generic Plug-In](https://arxiv.org/abs/2305.17331)
 - [Retrieve Anything To Augment Large Language Models](https://arxiv.org/abs/2310.07554)
+- [RAG-Maestro](https://github.com/AymenKallala/RAG_Maestro)
+- [RAG vs. Fine-tuning: Pipelines, Tradeoffs, and a Case Study on Agriculture](https://huggingface.co/papers/2401.08406)
+- [LlamaIndex: Enhancing Retrieval Performance with Alpha Tuning in Hybrid Search in RAG](https://blog.llamaindex.ai/llamaindex-enhancing-retrieval-performance-with-alpha-tuning-in-hybrid-search-in-rag-135d0c9b8a00)
+- [UltraTextbooks](https://huggingface.co/datasets/Locutusque/UltraTextbooks)
+- [Retrieval Augmented Generation (RAG) for LLMs - Prompt Engineering Guide](https://www.promptingguide.ai/research/rag)
+- [How we got fine-tuning Mistral-7B to not suck: Helix Project Report, Feb 2024](https://helixml.substack.com/p/how-we-got-fine-tuning-mistral-7b)
 
 
 ## Compression
@@ -84,6 +96,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [HEAT: Hardware-Efficient Automatic Tensor Decomposition for Transformer Compression](https://arxiv.org/abs/2211.16749)
 - [A White Paper on Neural Network Quantization](https://arxiv.org/abs/2106.08295)
 - [SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models](https://arxiv.org/abs/2211.10438)
+- [Accelerating Triton Dequantization Kernels for GPTQ](https://pytorch.org/blog/accelerating-triton/)
 
 
 ## Compilers
@@ -108,3 +121,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [Automatic differentiation in PyTorch](https://openreview.net/forum?id=BJJsrmfCZ)
 - [Simple and Controllable Music Generation](https://arxiv.org/abs/2306.05284)
 - [Accelerating Reduction and Scan Using Tensor Core Units](https://arxiv.org/abs/1811.09736)
+- [How to Escape Saddle Points Efficiently](https://arxiv.org/abs/1703.00887)
+- [How to Scale Hyperparameters as Batch Size Increases](https://www.cs.princeton.edu/~smalladi/blog/2024/01/22/SDEs-ScalingRules/)
+- [Model Merging Paper Collection - Hugging Face](https://huggingface.co/collections/osanseviero/model-merging-65097893623330a3a51ead66)
+- [Knowledge Fusion of Large Language Models](https://arxiv.org/abs/2401.10491)
