@@ -8,7 +8,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 
 - [ ] [Pushing Mixture of Experts to the Limit: Extremely Parameter Efficient MoE for Instruction Tuning](https://arxiv.org/abs/2309.05444)
 - [ ] [SwitchHead: Accelerating Transformers with Mixture-of-Experts Attention](https://huggingface.co/papers/2312.07987)
-- [ ] [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://tenstorrent.com/research/megablocks-efficient-sparse-training-with-mixture-of-experts/)
+- [ ] [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
 - [ ] [From Sparse to Soft Mixtures of Experts](https://arxiv.org/abs/2308.00951v1)
 - [ ] [Interpretable Mixture of Experts](https://arxiv.org/abs/2206.02107)
 - [ ] [A Review of Sparse Expert Models in Deep Learning](https://tenstorrent.com/research/a-review-of-sparse-expert-models-in-deep-learning/)
@@ -17,6 +17,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [ ] [GShard](https://arxiv.org/abs/2006.16668)
 - [ ] [Switch Transformers](https://arxiv.org/abs/2101.03961)
 - [ ] [MoE-Infinity: : Activation-Aware Expert Offloading for Efficient MoE Serving](https://arxiv.org/abs/2401.14361)
+- [ ] [Mixtures of Experts Unlock Parameter Scaling for Deep RL](https://huggingface.co/papers/2402.08609)
 
 
 ## LLM Inference
