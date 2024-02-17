@@ -75,11 +75,11 @@ I find this weird: Shouldn't it be 25%?
 
 ## Aespa - Post-Training Quantization of Hyper-Scale Transformers
 
-2024-02-16
+2024-02-16 19:26
 
-A "next-level" post-training quantization method called "aespa".
-I see what you did there haha
+A "next-level" post-training quantization method called "aespa". I see what you did there haha  
 https://arxiv.org/abs/2402.08958
+
 ![](imgs/next-level.png)
 
 ### What improvements does aespa bring?
@@ -92,6 +92,7 @@ Separately quantize Wq, Wk, Wv in attn to minimize the reconstruction error of t
 ### Separate quantization costs more time. How does aespa overcome this?
 By approximating the quantization objective and pre-compute refactored common terms.
 That said, I don't understand how the authors Taylor expanded delta A:
+
 ![](imgs/taylor-expansion-delta-a.png)
 
 ### How does it compare with other PQT schemes?
