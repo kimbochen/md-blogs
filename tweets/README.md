@@ -108,3 +108,35 @@ Not sure why they picked OmniQuant for comparison though. Maybe for its recency?
 ### End notes
 - The math is slightly out of reach for me. I should really improve my matrix calculus
 - I seem to lack a bit context of quantization, including initialization (AWQ, Z-Fold), weight-rounding (AdaRound, AdaQuant), etc.
+
+
+## Aya
+
+Aya: Another win for open science research after OLMo and MiniCPM.  
+Aya aims to improve multilingual abilities of our models through building the dataset that includes as many languages as possible.  
+The dataset: https://arxiv.org/abs/2402.06619  
+The model: https://arxiv.org/abs/2402.07827
+
+### Released data
+-  Aya Dataset: The human-annotated, multilingual instr. fine-tuning dataset
+- Aya Collection: Superset of Aya Dataset, including templated and translated data of selected existing datasets
+
+### How data composition impacts task perf (5.6.1)
+The authors trained 3 models: more templated (TP), more translated (TR), and more human-annotated (HA) data.
+- TP performs best in discriminative tasks while having more English data, indicating cross-lingual transfer for the task
+- TR greatly outperforms TP on translation tasks and is preferred for open-ended gen
+- HA is limited by the dataset size :(
+
+### Some thoughts
+Building datasets is probably the task that has the highest importance-to-appreciation ratio.
+We keep seeing impressive models that are essentially well-known methods trained on large-scale, high-quality data.
+
+While the open-source community is still putting up a good fight to invent great methods, building datasets seems to be less discussed.
+Aya is fighting this more difficult side of battle.
+
+My favorite part of the dataset paper is section 7 "A Participatory Approach to Research."
+The social and political challenges some volunteers have to overcome to contribute to Aya gives me hope and inspires me.  
+My favorite quote:
+> Including these factors in our post-mortem analysis of the project is crucial to understanding both the motivation of people willing to volunteer for open-science projects, and also to understanding the data itself: its breadth, its provenance, its shortcomings, and its living history.
+
+I am grateful to participate in the project and contribute an infinitesimal amount of data.
