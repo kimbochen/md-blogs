@@ -112,6 +112,8 @@ Not sure why they picked OmniQuant for comparison though. Maybe for its recency?
 
 ## Aya
 
+2024-02-17 14:21
+
 Aya: Another win for open science research after OLMo and MiniCPM.  
 Aya aims to improve multilingual abilities of our models through building the dataset that includes as many languages as possible.  
 The dataset: https://arxiv.org/abs/2402.06619  
