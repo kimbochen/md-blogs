@@ -142,3 +142,28 @@ My favorite quote:
 > Including these factors in our post-mortem analysis of the project is crucial to understanding both the motivation of people willing to volunteer for open-science projects, and also to understanding the data itself: its breadth, its provenance, its shortcomings, and its living history.
 
 I am grateful to participate in the project and contribute an infinitesimal amount of data.
+
+
+## Scalable Diffusion Models with Transformers
+
+2024-02-17 16:11
+
+Sora again showed the scalability of transformers. I read diffusion transformers, supposedly the model Sora is based on.
+https://arxiv.org/abs/2212.09748
+
+DiT replaces U-Net in a latent diffusion model with transformers, claiming scalability
+- More inference compute (smaller patch, longer seq len) almost equals better performance
+
+  ![](imgs/scale-gflops.jpg)
+
+- Larger models w/ less training outperforms small models w/ more training
+
+  ![](imgs/scale-train-compute.jpg)
+
+
+Sora really surprised me because my impression of text-to-video was stuck at Phenaki.  
+I guess I wasn't aware of all the progress in the video generation space: VideoPoet (Dec 2023) seems already pretty good.  
+https://blog.research.google/2023/12/videopoet-large-language-model-for-zero.html
+
+VideoPoet is not a diffusion model though.  
+It is a transformer with multi-axis attention and uses different encoder models to tokenize text, video, and audio.
