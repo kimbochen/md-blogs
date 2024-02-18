@@ -32,6 +32,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [ ] [EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://huggingface.co/papers/2401.15077)
 - [ ] [Specialized Language Models with Cheap Inference from Limited Domain Data](https://huggingface.co/papers/2402.01093)
 - [ ] [Accelerating Self-Attentions for LLM Serving with FlashInfer](https://flashinfer.ai/2024/02/02/introduce-flashinfer.html)
+- [ ] [Beyond Chinchilla-Optimal: Accounting for Inference in Language Model Scaling Laws](https://arxiv.org/abs/2401.00448)
 
 
 ## Models
