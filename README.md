@@ -14,3 +14,10 @@ This is a blog where I write about research papers and blog posts I read.
 - [Graph Compilers](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers)
 - [Triton Compiler](https://github.com/kimbochen/md-blogs/tree/main/triton)
 - [Triton GPU IR Analysis](https://github.com/kimbochen/md-blogs/tree/main/triton-gpu-ir-analysis)
+- [Distributed Training in ML](https://github.com/kimbochen/md-blogs/tree/main/ml-distributed-training)
+
+
+## Others
+
+- [Twitter Archive](https://github.com/kimbochen/md-blogs/tree/main/tweets)
+- [Reading List Dump](https://github.com/kimbochen/md-blogs/tree/main/reading-list-dump)
