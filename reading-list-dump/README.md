@@ -33,6 +33,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [ ] [Specialized Language Models with Cheap Inference from Limited Domain Data](https://huggingface.co/papers/2402.01093)
 - [ ] [Accelerating Self-Attentions for LLM Serving with FlashInfer](https://flashinfer.ai/2024/02/02/introduce-flashinfer.html)
 - [ ] [Beyond Chinchilla-Optimal: Accounting for Inference in Language Model Scaling Laws](https://arxiv.org/abs/2401.00448)
+- [ ] [Tandem Transformers for Inference Efficient LLMs](https://arxiv.org/abs/2402.08644)
 
 
 ## Models
@@ -70,6 +71,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [ ] [Small-scale proxies for large-scale Transformer training instabilities](https://arxiv.org/abs/2309.14322)
 - [ ] [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer](https://arxiv.org/abs/2203.03466)
 - [ ] [Cramming: Training a Language Model on a Single GPU in One Day](https://arxiv.org/abs/2212.14034)
+- [ ] [How to Train Data-Efficient LLMs](https://arxiv.org/abs/2402.09668)
 - [ ] [Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning](https://arxiv.org/abs/2205.05638)
 - [ ] [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)
 - [ ] [Tutorial #17: Transformers III Training](https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/)
@@ -127,3 +129,7 @@ Here is my attempt to gather them all here, group them into topics, and prioriti
 - [ ] [How to Scale Hyperparameters as Batch Size Increases](https://www.cs.princeton.edu/~smalladi/blog/2024/01/22/SDEs-ScalingRules/)
 - [ ] [Model Merging Paper Collection - Hugging Face](https://huggingface.co/collections/osanseviero/model-merging-65097893623330a3a51ead66)
 - [ ] [Knowledge Fusion of Large Language Models](https://arxiv.org/abs/2401.10491)
+- Datalogy
+  - [ ] [Introduction blog](https://www.datologyai.com/post/introducing-datologyai-making-models-better-through-better-data-automatically)
+  - [ ] [D4: Improving LLM Pretraining via Document De-Duplication and Diversification](https://arxiv.org/abs/2308.12284)
+  - [ ] [Beyond neural scaling laws: beating power law scaling via data pruning](https://arxiv.org/abs/2206.14486)
