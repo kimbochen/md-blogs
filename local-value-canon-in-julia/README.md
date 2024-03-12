@@ -1,8 +1,4 @@
----
-title: "Local Value Canonicalization in Julia"
-date: 2021-08-21T20:15:57+08:00
-draft: false
----
+# Local Value Canonicalization in Julia
 
 This is an article explaining my interpretation and implementation of **local value numbering**, a compiler optimization technique.
 
