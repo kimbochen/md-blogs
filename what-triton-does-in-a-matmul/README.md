@@ -18,7 +18,7 @@ We assign every Triton program to the computation for one 16 by 16 output tile.
 Index calculation is as follows:
 
 | Name | Value |
-| :- | :-: |
+| :- | :- |
 | Program ID | `(i, j)` |
 | Top-left index of the output tile | `(16 * i, 16 * j)` |
 | Output tile row indices | `r = 16 * i + range(0, 16)` |
