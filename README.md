@@ -17,9 +17,11 @@ This is a blog where I write about research papers and blog posts I read.
 - [Distributed Training in ML](https://github.com/kimbochen/md-blogs/tree/main/ml-distributed-training)
 - [Local Value Canonicalization in Julia](https://github.com/kimbochen/md-blogs/tree/main/local-value-canon-in-julia)
 - [Tesla AI Day 2021 - Vision](https://github.com/kimbochen/md-blogs/tree/main/tesla-ai-day-2021-vision)
+- [What Triton Does in a Matrix Multiplication](https://github.com/kimbochen/md-blogs/tree/main/what-triton-does-in-a-matmul)
 
 ## Others
 
-- [Twitter Archive](https://github.com/kimbochen/md-blogs/tree/main/tweets)
 - [Reading List Dump](https://github.com/kimbochen/md-blogs/tree/main/reading-list-dump)
+- [Twitter Archive](https://github.com/kimbochen/md-blogs/tree/main/tweets)
 - [Post Archive](https://github.com/kimbochen/md-blogs/tree/main/post-archive)
+- [Threads Archive](https://github.com/kimbochen/md-blogs/tree/main/threads-archive)
