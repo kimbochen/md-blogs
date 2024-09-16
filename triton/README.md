@@ -8,7 +8,7 @@ Deep learning algorithms are resource-intensive, so researchers need efficient i
 This is usually done by implementing specialized GPU kernels, 
 but GPU programming requires a lot of knowledge about GPU architecture and familiarity with low-level programming.
 This increases the development time and in worse case limits the researchers' ability to explore more unconventional algorithms
-(i.e. [the hardware lottery](https://github.com/kimbochen/md-blogs/tree/main/the-hardware-lottery)).  
+(i.e. [the hardware lottery](/the-hardware-lottery/README.md)).  
 Triton offers a programming model that is simpler than common GPU ones, e.g. CUDA, but has more control than deep learning frameworks,
 all the while leveraging a compiler to achieve the performance of highly-tuned low-level GPU kernel implementations.
 
@@ -97,7 +97,7 @@ Triton is integrated with TorchInductor and is the default codegen for GPUs.
 The PyTorch compiler stack leverages Triton to generate generic kernels with function inlining and operator fusion.
 Using Triton with TorchInductor offers decent speedups for model training and inference.
 Function inlining and operator fusion are the optimizations that provide the most speedup,
-which is in line with what I learned about ML compilers ([My ML compiler post](https://github.com/kimbochen/md-blogs/tree/main/graph-compilers)).  
+which is in line with what I learned about ML compilers ([My ML compiler post](/graph-compilers/README.md)).
 
 | | Inference | Training |
 | -: | :- | :- |
@@ -113,7 +113,7 @@ However, highly-tuned libraries like cuBLAS still outperforms Triton by a decent
 The author explains that cuBLAS is able to apply [3D matmul algorithms](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5389455)
 to provide more parallelism.  
 For more information on the PyTorch compiler stack, see this [terrific slide deck by Keren Zhou](https://www.jokeren.tech/slides/Triton_bsc.pdf)
-or [my blog post](https://github.com/kimbochen/md-blogs/tree/main/pytorch-systems-intro#pytorch).
+or [my blog post](/pytorch-systems-intro/README.md#pytorch).
 
 
 ## Further Readings

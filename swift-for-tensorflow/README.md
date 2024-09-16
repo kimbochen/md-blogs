@@ -57,5 +57,5 @@ and a [blog](https://pytorch.org/blog/understanding-lazytensor-system-performanc
 A natural next step is to look into what compiler features PyTorch 2.0 has.
 PyTorch 2.0 has 3 new components: TorchDynamo, AOTAutograd, and TorchInductor.
 I wrote briefly about it in my
-[PyTorch Systems Intro](https://github.com/kimbochen/md-blogs/tree/main/pytorch-systems-intro#The-PyTorch-20-compiling-pipeline) post,
+[PyTorch Systems Intro](/pytorch-systems-intro/README.md#The-PyTorch-20-compiling-pipeline) post,
 but the 3 features are definitely worth a deep dive in the future.

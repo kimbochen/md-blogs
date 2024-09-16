@@ -57,7 +57,7 @@ This is why PyTorch 2 is pushing to support dynamic shapes ([Documentation](http
 When lowering graphs to hardware-specific operators, Glow does not map high-level operator nodes to hardware, e.g. fully-connected layer,
 but further lowers the nodes to linear-algebra-level operators, e.g. a matrix multiplication and a broadcast addition.
 This gradual lowering technique is also seen in PyTorch 2 ATen IR and Prim IR
-(See my [blog post](https://github.com/kimbochen/md-blogs/tree/main/pytorch-systems-intro#the-pytorch-20-compiling-pipeline) for more).
+(See my [blog post](/pytorch-systems-intro/README.md#the-pytorch-20-compiling-pipeline) for more).
 
 ### Quantization
 Glow performs model weight quantization, which is something I find quite interesting.
